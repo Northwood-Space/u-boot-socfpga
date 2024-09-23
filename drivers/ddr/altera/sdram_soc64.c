@@ -1,10 +1,8 @@
 // SPDX-License-Identifier: GPL-2.0
 /*
  * Copyright (C) 2016-2023 Intel Corporation <www.intel.com>
- *
  */
 
-#include <common.h>
 #include <cpu_func.h>
 #include <dm.h>
 #include <errno.h>
@@ -333,9 +331,8 @@ static void sdram_set_firewall_non_f2sdram(struct bd_info *bd)
 #if IS_ENABLED(CONFIG_TARGET_SOCFPGA_AGILEX5)
 static void sdram_set_firewall_f2sdram(struct bd_info *bd)
 {
-	u32 i;
+	u32 i, lower, upper;
 	phys_size_t value;
-	u32 lower, upper;
 
 	for (i = 0; i < CONFIG_NR_DRAM_BANKS; i++) {
 		if (!bd->bi_dram[i].size)
@@ -421,9 +418,9 @@ static int altera_sdram_of_to_plat(struct udevice *dev)
 
 static int altera_sdram_probe(struct udevice *dev)
 {
+	int ret;
 	struct altera_sdram_priv *priv = dev_get_priv(dev);
 
-	int ret;
 	ret = reset_get_bulk(dev, &priv->resets);
 	if (ret) {
 		dev_err(dev, "Can't get reset: %d\n", ret);
