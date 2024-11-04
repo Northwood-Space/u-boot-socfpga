@@ -9,8 +9,11 @@
 #include <asm/global_data.h>
 #include <asm/io.h>
 #include <common.h>
+#include <linux/bitfield.h>
 
 DECLARE_GLOBAL_DATA_PTR;
+
+static void sysmgr_config_usb3(void);
 
 /*
  * Configure all the pin muxes
@@ -19,6 +22,9 @@ void sysmgr_pinmux_init(void)
 {
 	populate_sysmgr_pinmux();
 	populate_sysmgr_fpgaintf_module();
+
+	if (IS_ENABLED(CONFIG_TARGET_SOCFPGA_AGILEX5))
+		sysmgr_config_usb3();
 }
 
 /*
@@ -116,4 +122,21 @@ void populate_sysmgr_pinmux(void)
 		       (u8 *)socfpga_get_sysmgr_addr() +
 		       SYSMGR_SOC64_IODELAY0);
 	}
+}
+
+/*
+ * Setting RESET_PULSE_OVERRIDE bit for successful reset staggering pulse
+ * generation and setting PORT_OVERCURRENT bit so that until we turn on the
+ * Vbus, it doesn't give false information about Vbus to the HPS controller.
+ */
+static void sysmgr_config_usb3(void)
+{
+	u32 reg_val = 0;
+
+	reg_val = readl(socfpga_get_sysmgr_addr() + SYSMGR_SOC64_USB3_MISC_CTRL_REG0);
+	reg_val |= FIELD_PREP(SYSMGR_SOC64_USB3_MISC_CTRL_REG0_RESET_PUL_OVR,
+						SET_USB3_MISC_CTRL_REG0_PORT_RESET_PUL_OVR);
+	reg_val |= FIELD_PREP(SYSMGR_SOC64_USB3_MISC_CTRL_REG0_PORT_OVR_CURR,
+						SET_USB3_MISC_CTRL_REG0_PORT_OVR_CURR_BIT_1);
+	writel(reg_val, socfpga_get_sysmgr_addr() + SYSMGR_SOC64_USB3_MISC_CTRL_REG0);
 }
