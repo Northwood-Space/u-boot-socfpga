@@ -9,86 +9,49 @@
 	model = "SoCFPGA Stratix 10 SoCDK";
 
 	aliases {
-		ethernet0 = &gmac0;
-		i2c0 = &i2c1;
-		serial0 = &uart0;
-	};
-
-	leds {
-		compatible = "gpio-leds";
-		hps0 {
-			label = "hps_led0";
-			gpios = <&portb 20 GPIO_ACTIVE_HIGH>;
-		};
-
-		hps1 {
-			label = "hps_led1";
-			gpios = <&portb 19 GPIO_ACTIVE_HIGH>;
-		};
-
-		hps2 {
-			label = "hps_led2";
-			gpios = <&portb 21 GPIO_ACTIVE_HIGH>;
-		};
+		ethernet1 = &gmac1;
+		serial1 = &uart1;
 	};
 
 	memory {
-		#address-cells = <2>;
-		#size-cells = <2>;
+		#address-cells = <1>;
+		#size-cells = <1>;
 		device_type = "memory";
-		/* 4GB */
-		reg = <0 0x00000000 0 0x80000000>,
-		      <1 0x80000000 0 0x80000000>;
+		/* 2GB */
+		reg = <0 0x00000000 0 0x80000000>;
 		bootph-all;
 	};
 };
 
-&gpio1 {
-	status = "okay";
-};
-
-&gmac0 {
+&gmac1 {
 	status = "okay";
 	phy-mode = "rgmii";
-	phy-handle = <&phy0>;
+	phy-handle = <&phy1>;
 
 	max-frame-size = <3800>;
 
-	mdio0 {
+	mdio {
 		#address-cells = <1>;
 		#size-cells = <0>;
 		compatible = "snps,dwmac-mdio";
-		phy0: ethernet-phy@0 {
-			reg = <4>;
-
-			txd0-skew-ps = <0>; /* -420ps */
-			txd1-skew-ps = <0>; /* -420ps */
-			txd2-skew-ps = <0>; /* -420ps */
-			txd3-skew-ps = <0>; /* -420ps */
-			rxd0-skew-ps = <420>; /* 0ps */
-			rxd1-skew-ps = <420>; /* 0ps */
-			rxd2-skew-ps = <420>; /* 0ps */
-			rxd3-skew-ps = <420>; /* 0ps */
-			txen-skew-ps = <0>; /* -420ps */
-			txc-skew-ps = <900>; /* 0ps */
-			rxdv-skew-ps = <420>; /* 0ps */
-			rxc-skew-ps = <1680>; /* 780ps */
+		// SOCFPGA_STRATIX10 # mii info 0x5
+		//      PHY 0x05: OUI = 0x0885, Model = 0x22, Rev = 0x02, 1000baseT, FDX
+		phy1: ethernet-phy@5 {
+			reg = <5>;
+			rxd0-skew-ps = <480>;
+			rxd1-skew-ps = <480>;
+			rxd2-skew-ps = <480>;
+			rxd3-skew-ps = <480>;
+			rxdv-skew-ps = <480>;
+			txd0-skew-ps = <360>;
+			txd1-skew-ps = <360>;
+			txd2-skew-ps = <360>;
+			txd3-skew-ps = <360>;
+			txen-skew-ps = <360>;
+			rxc-skew-ps = <1680>;
+			txc-skew-ps = <1800>;
 		};
 	};
-};
-
-&i2c1 {
-	status = "okay";
-};
-
-&mmc {
-	status = "okay";
-	cap-sd-highspeed;
-	cap-mmc-highspeed;
-	broken-cd;
-	bus-width = <4>;
-	drvsel = <3>;
-	smplsel = <2>;
 };
 
 &qspi {
@@ -126,12 +89,10 @@
 	};
 };
 
-&uart0 {
+&uart1 {
 	status = "okay";
-};
-
-&usb0 {
-	status = "okay";
+	bootph-all;
+	clock-frequency = <100000000>;
 };
 
 &watchdog0 {

@@ -370,7 +370,7 @@
 		usbphy0: usbphy@0 {
 			#phy-cells = <0>;
 			compatible = "usb-nop-xceiv";
-			status = "okay";
+			status = "disabled";
 		};
 
 		usb0: usb@ffb00000 {
