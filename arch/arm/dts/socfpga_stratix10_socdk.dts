@@ -50,6 +50,19 @@
 			txen-skew-ps = <360>;
 			rxc-skew-ps = <1680>;
 			txc-skew-ps = <1800>;
+			/*
+			* A fun note from multiple friends on our microchip phy :)
+			* 	arch/arm/dts/draak.dtsi
+			* 	arch/arm/dts/ebisu.dtsi
+			*
+		 	* TX clock internal delay mode is required for reliable
+		 	* 1Gbps communication using the KSZ9031RNX phy present on
+		 	* the Draak board, however, TX clock internal delay mode
+		 	* isn't supported on R-Car D3(e).  Thus, limit speed to
+		 	* 100Mbps for reliable communication.
+			*
+		 	*/
+			max-speed = <100>;
 		};
 	};
 };
