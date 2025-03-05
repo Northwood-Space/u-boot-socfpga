@@ -244,6 +244,9 @@ obj-$(CONFIG_ARCH_K3) += ti/
 obj-$(CONFIG_ARCH_OMAP2PLUS) += ti/
 endif # !CONFIG_SPL_BUILD
 
+# Northwood
+obj-$(CONFIG_CMD_NORTHWOOD) += northwood.o
+
 obj-$(CONFIG_$(SPL_)CMD_TLV_EEPROM) += tlv_eeprom.o
 
 # core command
