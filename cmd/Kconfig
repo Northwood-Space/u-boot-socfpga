@@ -2908,3 +2908,10 @@ config CMD_MESON
 	help
 	  Enable useful commands for the Meson Soc family developed by Amlogic Inc.
 endmenu
+
+config CMD_NORTHWOOD
+	bool "Northwood Beamformer Commands"
+	depends on ARM_SMCCC
+	default n
+	help
+		Enable custom northwood commands in U-Boot.

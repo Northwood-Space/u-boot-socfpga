@@ -1,1 +1,0 @@
-obj-nw += nw.o
