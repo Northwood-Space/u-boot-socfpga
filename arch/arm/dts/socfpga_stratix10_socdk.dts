@@ -77,13 +77,9 @@
 			#size-cells = <1>;
 
 			qspi_boot: partition@0 {
+				// this must match CONFIG_ENV_UBI_PART
 				label = "u-boot";
 				reg = <0x0 0x04200000>;
-			};
-
-			root: partition@4200000 {
-				label = "root";
-				reg = <0x04200000 0x0BE00000>;
 			};
 		};
 	};
