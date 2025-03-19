@@ -10,7 +10,7 @@
 /{
 	chosen {
 		stdout-path = "serial1:115200n8";
-		u-boot,spl-boot-order = &mmc,&flash0;
+		u-boot,spl-boot-order = &uart1,&mmc,&flash0;
 	};
 
 	aliases {
