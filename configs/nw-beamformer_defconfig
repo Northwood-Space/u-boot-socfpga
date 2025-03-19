@@ -109,7 +109,7 @@ CONFIG_USE_BOOTARGS=y
 CONFIG_BOOTARGS_SUBST=y
 CONFIG_HUSH_PARSER=y
 CONFIG_USE_BOOTCOMMAND=y
-CONFIG_BOOTARGS="earlycon panic=-1 initrd=initrd console=ttyS1,115200 loglevel=4"
+CONFIG_BOOTARGS="earlycon panic=-1 initrd=initrd console=ttyS1,${baudrate} loglevel=4"
 
 
 # Disable support for NAND
