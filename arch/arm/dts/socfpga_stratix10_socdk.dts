@@ -37,6 +37,7 @@
 		// SOCFPGA_STRATIX10 # mii info 0x5
 		//      PHY 0x05: OUI = 0x0885, Model = 0x22, Rev = 0x02, 1000baseT, FDX
 		phy1: ethernet-phy@5 {
+			max-speed = <100>;
 			reg = <5>;
 			rxd0-skew-ps = <480>;
 			rxd1-skew-ps = <480>;
