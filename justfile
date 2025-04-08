@@ -1,3 +1,6 @@
+default:
+  just --list
+
 # Run all required cleaning commands
 [group('Build')]
 clean:
