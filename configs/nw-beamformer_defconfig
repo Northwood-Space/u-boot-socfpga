@@ -102,7 +102,7 @@ CONFIG_PANIC_HANG=y
 
 # Boot support
 CONFIG_BOOTFILE="Image"
-CONFIG_BOOTCOMMAND="bridge enable ; dhcp ; bootm"
+CONFIG_BOOTCOMMAND="bridge enable ; dhcp ; source ${loadaddr}:bootscript ; bootm"
 CONFIG_QSPI_BOOT=y
 CONFIG_BOOTDELAY=5
 CONFIG_USE_BOOTARGS=y
